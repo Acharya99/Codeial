@@ -1,8 +1,8 @@
 const passport = require('passport');
 
-const User = require('../models/user');
-
 const LocalStrategy = require('passport-local').Strategy;
+
+const User = require('../models/user');
 
 
 // authentication using passport
@@ -11,8 +11,8 @@ passport.use(new LocalStrategy({
     },
     function(email, password, done){
         // find a user and establish the identity
-        User.findOne({email: email}, function(err, user) {
-            if(err){
+        User.findOne({email: email}, function(err, user)  {
+            if (err){
                 console.log('Error in finding user --> Passport');
                 return done(err);
             }
@@ -25,14 +25,19 @@ passport.use(new LocalStrategy({
             return done(null, user);
         });
     }
+
+
 ));
 
-//serializing the user to decide which key is to be kept in thr cookies
+
+// serializing the user to decide which key is to be kept in the cookies
 passport.serializeUser(function(user, done){
     done(null, user.id);
 });
 
-//deserializing the user from the key in the cookies
+
+
+// deserializing the user from the key in the cookies
 passport.deserializeUser(function(id, done){
     User.findById(id, function(err, user){
         if(err){
@@ -41,11 +46,11 @@ passport.deserializeUser(function(id, done){
         }
 
         return done(null, user);
-
     });
 });
 
-// check if the user is authenticated 
+
+// check if the user is authenticated
 passport.checkAuthentication = function(req, res, next){
     // if the user is signed in, then pass on the request to the next function(controller's action)
     if (req.isAuthenticated()){
