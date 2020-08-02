@@ -20,8 +20,8 @@
 
 const express = require('express');
 
-const router = express.Router();
-const homeController = require('../controllers/home_controller');
+const router = express.Router();  // initializing router
+const homeController = require('../controllers/home_controller');  // for initializing home controller
 
 console.log('router loaded');
 
