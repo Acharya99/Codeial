@@ -26,10 +26,10 @@
 
 
 const mongoose = require('mongoose');
+
 const multer = require('multer');
 const path = require('path');
 const AVATAR_PATH = path.join('/uploads/users/avatars');
-
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -47,7 +47,14 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String
-    }
+    },
+    friendships: [
+        { 
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Friendship' 
+        }
+    ]
+
 }, {
     timestamps: true
 });
@@ -61,12 +68,11 @@ let storage = multer.diskStorage({
       cb(null, file.fieldname + '-' + Date.now());
     }
   });
-   
 
-  // static methods
 
-  userSchema.statics.uploadedAvatar = multer({storage: storage}).single('avatar');
-  userSchema.statics.avatarPath = AVATAR_PATH;
+// static
+userSchema.statics.uploadedAvatar = multer({storage:  storage}).single('avatar');
+userSchema.statics.avatarPath = AVATAR_PATH;
 
 
 

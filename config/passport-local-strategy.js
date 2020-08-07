@@ -2,13 +2,13 @@ const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
 
-const User = require('../models/user');  // importing user details
+const User = require('../models/user');
 
 
 // authentication using passport
 passport.use(new LocalStrategy({
         usernameField: 'email',
-        passReqToCallback: true  // for checking email is there and call back and getting req
+        passReqToCallback: true
     },
     function(req, email, password, done){
         // find a user and establish the identity
